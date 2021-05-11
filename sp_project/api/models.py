@@ -1,103 +1,203 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-# Create your models here.
-class Class(models.Model):
-  class Meta:
-    db_table = "Class"
-  class_id = models.BigIntegerField(db_column='ClassID', primary_key=True)
-  name = models.CharField(db_column='Name', max_length=256)
-  no_of_student = models.IntegerField(db_column='NoOfStudent')
 
-  def __str__(self):
-    return '%d %s %d' % (class_id, name, no_of_student)
+class Class(models.Model):
+    classid = models.AutoField(db_column='ClassID', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(max_length=255, db_column='Name', blank=True, null=True)  # Field name made lowercase.
+    noofstudent = models.IntegerField(db_column='NoOfStudent', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Class'
+
 
 class Question(models.Model):
-  class Meta: 
-    db_table = "Question"
-  question_id = models.BigIntegerField(db_column='QuestionID', primary_key=True)
-  description = models.CharField(db_column='Description', max_length=256, blank=True)
-  question = models.CharField(db_column='Question', max_length=256, null=True)
-  model_ans = models.CharField(db_column='ModelAns', max_length=256)
-  active_status = models.BooleanField(db_column='ActiveStatus', default=True)
-  part_status = models.BooleanField(db_column='PartStatus', default=False)
-  quest_total_mark = models.FloatField(db_column='QuestTotalMark', default=0)
-  updated_by = models.CharField(db_column='UpdatedBy', max_length=256, null=True)
-  archived_by = models.CharField(db_column='ArchivedBy', max_length=256, null=True)
-  added_by = models.CharField(db_column='AddedBy', max_length=256, null=True)
+    questionid = models.AutoField(db_column='QuestionID', primary_key=True)  # Field name made lowercase.
+    description = models.CharField(max_length=255, db_column='Description', blank=True, null=True)  # Field name made lowercase.
+    modelans = models.CharField(max_length=255, db_column='ModelAns', blank=True, null=True)  # Field name made lowercase.
+    question = models.CharField(max_length=255, db_column='Question', blank=True, null=True)  # Field name made lowercase.
+    activestatus = models.SmallIntegerField(db_column='ActiveStatus', blank=True, null=True)  # Field name made lowercase.
+    partstatus = models.SmallIntegerField(db_column='PartStatus', blank=True, null=True)  # Field name made lowercase.
+    questtotalmark = models.TextField(db_column='QuestTotalMark', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    archivedby = models.CharField(max_length=255, db_column='ArchivedBy', blank=True, null=True)  # Field name made lowercase.
+    updatedby = models.CharField(max_length=255, db_column='UpdatedBy', blank=True, null=True)  # Field name made lowercase.
+    addedby = models.CharField(max_length=255, db_column='AddedBy', blank=True, null=True)  # Field name made lowercase.
 
-  def __str__(self):
-    return '%d %s %s' % (question_id, question, model_ans)
-
-
-class Student(models.Model):
-  class Meta: 
-    db_table = "Student"
-
-  student_id = models.BigIntegerField(db_column='StudID', primary_key=True)
-  name = models.CharField(db_column='Name', max_length=256)
-  nric = models.CharField(db_column='NRIC', max_length=256, null=True)
-  class_id = models.ForeignKey(Class, models.CASCADE, db_column='ClassID')
-
-  def __str__(self):
-    return '%d %s' % (student_id, name)
-
-class TrnQuest(models.Model):
-  class Meta: 
-    db_table = "TrnQuest"
-    managed = True
-    unique_together = (('student_id', 'question_id'),)
-
-  trn_quest_id = models.BigIntegerField(db_column='TrnQuestID', primary_key=True)
-  student_id = models.ForeignKey(Student, models.CASCADE, db_column='StudID', null=True)
-  question_id = models.ForeignKey(Question, models.CASCADE, db_column='QuestionID', null=True)
-  response = models.CharField(db_column='Response', max_length=256, null=True)
-  trn_mark = models.FloatField(db_column='TrnMark', null=True)
-  reason = models.CharField(db_column='Reason', max_length=256, null=True)
-  other = models.CharField(db_column='Other', max_length=256, null=True)
-  moderated_by = models.CharField(db_column='ModeratedBy', max_length=256, null=True)
-  date_moderated = models.DateField(db_column='DateModerated', null=True)
-  date_marked = models.DateField(db_column='DateMarked', auto_now=True)
-
-  def __str__(self):
-    return '%d %s %s %f' % (student_id, question_id, response, trn_mark)
+    class Meta:
+        managed = False
+        db_table = 'Question'
 
 
 class QuestionPart(models.Model):
-  class Meta: 
-    db_table = "QuestionPart"
-    managed = True
-    unique_together = (('part_id', 'question_id'),)
+    questionid = models.IntegerField(db_column='QuestionID')  # Field name made lowercase.
+    partid = models.CharField(max_length=255, db_column='PartID')  # Field name made lowercase.
+    partquestion = models.CharField(max_length=255, db_column='PartQuestion', blank=True, null=True)  # Field name made lowercase.
+    partmodelans = models.CharField(max_length=255, db_column='PartModelAns', blank=True, null=True)  # Field name made lowercase.
+    parttotalmark = models.TextField(db_column='PartTotalMark', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
 
-  question_part_id = models.AutoField(primary_key=True)
-  part_id = models.CharField(db_column='PartID', max_length=5)
-  question_id = models.ForeignKey(Question, models.CASCADE, db_column='QuestionID', null=True)
-  part_question = models.CharField(db_column='PartQuestion', max_length=256, null=True)
-  part_model_ans = models.CharField(db_column='PartModelAns', max_length=256)
-  part_total_mark = models.FloatField(db_column='PartTotalMark', default=0)
+    class Meta:
+        managed = False
+        db_table = 'QuestionPart'
+        unique_together = (('questionid', 'partid'),)
 
-  def __str__(self):
-    return '%d %s %s %s' % (part_id, question_id, part_question, part_total_mark)
+
+class Student(models.Model):
+    studid = models.AutoField(db_column='StudID', primary_key=True)  # Field name made lowercase.
+    classid = models.IntegerField(db_column='ClassID')  # Field name made lowercase.
+    name = models.CharField(max_length=255, db_column='Name', blank=True, null=True)  # Field name made lowercase.
+    nric = models.TextField(db_column='NRIC', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'Student'
+
+
+class TrnQuest(models.Model):
+    studid = models.IntegerField(db_column='StudID')  # Field name made lowercase.
+    questionid = models.IntegerField(db_column='QuestionID')  # Field name made lowercase.
+    response = models.CharField(max_length=255, db_column='Response', blank=True, null=True)  # Field name made lowercase.
+    trnmark = models.CharField(max_length=255, db_column='TrnMark', blank=True, null=True)  # Field name made lowercase.
+    reason = models.CharField(max_length=255, db_column='Reason', blank=True, null=True)  # Field name made lowercase.
+    other = models.CharField(max_length=255, db_column='Other', blank=True, null=True)  # Field name made lowercase.
+    moderatedby = models.DateField(db_column='ModeratedBy', blank=True, null=True)  # Field name made lowercase.
+    datemoderated = models.DateField(db_column='DateModerated', blank=True, null=True)  # Field name made lowercase.
+    datemarked = models.DateField(db_column='DateMarked', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'TrnQuest'
+        unique_together = (('studid', 'questionid'),)
+
 
 class TrnQuestPart(models.Model):
-  class Meta: 
-    db_table = "TrnQuestPart"
-    managed = True
-    unique_together = (('student_id', 'question_id', 'part_id'),)
+    studid = models.IntegerField(db_column='StudID')  # Field name made lowercase.
+    questionid = models.IntegerField(db_column='QuestionID')  # Field name made lowercase.
+    partid = models.CharField(max_length=255, db_column='PartID')  # Field name made lowercase.
+    partresponse = models.CharField(max_length=255, db_column='PARTRESPONSE', blank=True, null=True)  # Field name made lowercase.
+    other = models.CharField(max_length=255, db_column='Other', blank=True, null=True)  # Field name made lowercase.
+    moderatedby = models.DateField(db_column='ModeratedBy', blank=True, null=True)  # Field name made lowercase.
+    datemoderated = models.DateField(db_column='DateModerated', blank=True, null=True)  # Field name made lowercase.
+    datemarked = models.DateField(db_column='DateMarked', blank=True, null=True)  # Field name made lowercase.
+    reason = models.CharField(max_length=255, db_column='Reason', blank=True, null=True)  # Field name made lowercase.
 
-  trn_quest_part_id = models.BigIntegerField(db_column='TrnQuestPartID', primary_key=True)
-  student_id = models.ForeignKey(Student, models.CASCADE, db_column='StudID', null=True)
-  question_id = models.ForeignKey(Question, models.CASCADE, db_column='QuestionID', null=True)
-  part_id = models.ForeignKey(QuestionPart, models.CASCADE, db_column='PartID', null=True)
+    class Meta:
+        managed = False
+        db_table = 'TrnQuestPart'
+        unique_together = (('studid', 'questionid', 'partid'),)
 
-  part_response = models.CharField(db_column='PartResponse', max_length=256)
-  trn_part_mark = models.FloatField(db_column='TrnPartMark', null=True)
 
-  reason = models.CharField(db_column='Reason', max_length=256, null=True)
-  other = models.CharField(db_column='Other', max_length=256, null=True)
-  moderated_by = models.CharField(db_column='ModeratedBy', max_length=256, null=True)
-  date_moderated = models.DateField(db_column='DateModerated', null=True)
+class AuthGroup(models.Model):
+    name = models.CharField(unique=True, max_length=150)
 
-  date_marked = models.DateField(db_column='DateMarked', auto_now=True)
+    class Meta:
+        managed = False
+        db_table = 'auth_group'
 
-  def __str__(self):
-    return '%d %s %s' % (student_id, question_id, part_id, part_response)
+
+class AuthGroupPermissions(models.Model):
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
+
+
+class AuthPermission(models.Model):
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+    codename = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
+
+
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField()
+    username = models.CharField(unique=True, max_length=150)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField()
+    first_name = models.CharField(max_length=150)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
+
+
+class AuthUserGroups(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_groups'
+        unique_together = (('user', 'group'),)
+
+
+class AuthUserUserPermissions(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_user_permissions'
+        unique_together = (('user', 'permission'),)
+
+
+class DjangoAdminLog(models.Model):
+    action_time = models.DateTimeField()
+    object_id = models.TextField(blank=True, null=True)
+    object_repr = models.CharField(max_length=200)
+    change_message = models.TextField()
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    action_flag = models.PositiveSmallIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_admin_log'
+
+
+class DjangoContentType(models.Model):
+    app_label = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'django_content_type'
+        unique_together = (('app_label', 'model'),)
+
+
+class DjangoMigrations(models.Model):
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
+
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField()
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
