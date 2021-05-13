@@ -1,8 +1,9 @@
 -- SQLite
-INSERT INTO Question(QuestionID, Description, ModelAns, ActiveStatus, PartStatus, QuestTotalMark, ArchivedBy, AddedBy, Question, UpdatedBy)
+INSERT INTO Question(QuestionID, Description, ActiveStatus, PartStatus, QuestionTotalMark, ArchivedBy, AddedBy, Question, UpdatedBy)
 VALUES 
-  (10, 'This questions about Activation Functions in Machine Learning Concepts', '', true, true, 3, null, null, 'Why is the ReLU function not differentiable at x=0?', null),
-  (11, 'Machine Learning is one of the most sought after skills these days. If you are a data scientist, then you need to be good at Machine Learning – no two ways about it.', '', true, true, 2, null, null, '(a) What is Data Mining?', null),  
-  (12, '', 'Deep Learning is a subfield of machine learning concerned with algorithms inspired by the structure and function of the brain called artificial neural networks.', true, false, 2, null, null, 'What is deep learning?', null),
-  (13, '', 'In short, machine learning algorithms are algorithms that learn (often predictive) models from data. I.e., instead of formulating “rules” manually, a machine learning algorithm will learn the model for you.', true, false, 3, null, null, 'What are machine learning and data science?', null),
-  (14, '', 'it can help us to understand the inner works of an algorithm. we could try to implement an algorithm more efficiently. we can add new features to an algorithm or experiment with different variations of the core idea. we circumvent licensing issues (e.g., Linux vs. Unix) or platform restrictions. we want to invent new algorithms or implement algorithms no one has implemented/shared yet. we are not satisfied with the API and/or we want to integrate it more “naturally” into an existing software library', true, false, 1, null, null, 'Why do you and other people sometimes implement machine learning algorithms from scratch?', null);
+  (10, 'This questions about Activation Functions in Machine Learning Concepts', true, true, 3, null, null, 'Why is the ReLU function not differentiable at x=0?', null),
+  (11, 'Machine Learning is one of the most sought after skills these days. If you are a data scientist, then you need to be good at Machine Learning – no two ways about it.', true, true, 2, null, null, '(a) What is Data Mining?', null),  
+  (12, '', true, false, 2, null, null, 'What is the purpose of regression analysis?', null),
+  (15, '', true, false, 2, null, null, 'What is deep learning?', null),
+  (13, '', true, false, 3, null, null, 'What are machine learning and data science?', null),
+  (14, '', true, false, 1, null, null, 'Why do you and other people sometimes implement machine learning algorithms from scratch?', null);
