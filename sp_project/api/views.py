@@ -37,7 +37,7 @@ def process_upload_file(request):
   if not file.name.endswith(('.xlsx','.xls')):
     raise ValidationError('Neeed Excel File!')
   else:
-    data = pd.read_excel(file,sheet_name=class_name)
+    data = pd.read_excel(file,sheet_name=0)
     no_question_cols = len([col for col in data.columns if 'Question ' in col])
     for row in range(data.shape[0]):
         no_question_cols
