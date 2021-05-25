@@ -1,4 +1,5 @@
 -- SQLite
+-- deprecated
 INSERT INTO Student (StudID, Name, NRIC, ClassID)
 VALUES 
   (12345, 'Ah Beng Teo', null, 1),
