@@ -6,3 +6,4 @@ DROP TABLE Student;
 DROP TABLE TrnQuest;
 DROP TABLE TrnQuestPart;
 DROP TABLE QuestionAns;
+DROP TABLE QuestionPartAns;

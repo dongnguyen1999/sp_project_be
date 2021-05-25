@@ -1,6 +1,6 @@
 --==============================================================
 -- DBMS name:      ANSI Level 2
--- Created on:     13-May-21 10:15:47 AM
+-- Created on:     18-May-21 3:20:56 PM
 --==============================================================
 
 
@@ -12,9 +12,7 @@
 
 -- drop table Question cascade;
 
--- drop index RELATIONSHIP_8_FK;
-
--- drop index RELATIONSHIP_7_FK;
+-- drop index RELATIONSHIP_9_FK;
 
 -- drop index QUESTIONANS_PK;
 
@@ -25,6 +23,12 @@
 -- drop index QUESTIONPART_PK;
 
 -- drop table QuestionPart cascade;
+
+-- drop index RELATIONSHIP_8_FK;
+
+-- drop index QUESTIONPARTANS_PK;
+
+-- drop table QuestionPartAns cascade;
 
 -- drop index COMPRISES_FK;
 
@@ -89,6 +93,34 @@ QuestionID ASC
 );
 
 --==============================================================
+-- Table: QuestionAns
+--==============================================================
+create table QuestionAns (
+QuestionID           INTEGER              not null,
+AnsID               INTEGER              not null,
+ModelAns             VARCHAR(255),
+AnsMark              FLOAT,
+primary key (QuestionID, AnsID),
+foreign key (QuestionID)
+      references Question (QuestionID)
+);
+
+--==============================================================
+-- Index: QUESTIONANS_PK
+--==============================================================
+create unique index QUESTIONANS_PK on QuestionAns (
+QuestionID ASC,
+AnsID ASC
+);
+
+--==============================================================
+-- Index: RELATIONSHIP_9_FK
+--==============================================================
+create  index RELATIONSHIP_9_FK on QuestionAns (
+QuestionID ASC
+);
+
+--==============================================================
 -- Table: QuestionPart
 --==============================================================
 create table QuestionPart (
@@ -99,36 +131,6 @@ PartTotalMark        FLOAT(255),
 primary key (QuestionID, PartID),
 foreign key (QuestionID)
       references Question (QuestionID)
-);
-
---==============================================================
--- Table: QuestionAns
---==============================================================
-create table QuestionAns (
-QuestionID           INTEGER              not null,
-PartID               VARCHAR(255)         not null,
-AnsID                INTEGER              not null,
-ModelAns             VARCHAR(255),
-AnsMark              FLOAT,
-primary key (QuestionID, PartID, AnsID),
-foreign key (QuestionID)
-      references Question (QuestionID)
-);
-
---==============================================================
--- Index: QUESTIONANS_PK
---==============================================================
-create unique index QUESTIONANS_PK on QuestionAns (
-QuestionID ASC,
-PartID ASC,
-AnsID ASC
-);
-
---==============================================================
--- Index: RELATIONSHIP_7_FK
---==============================================================
-create  index RELATIONSHIP_7_FK on QuestionAns (
-QuestionID ASC
 );
 
 --==============================================================
@@ -144,6 +146,37 @@ PartID ASC
 --==============================================================
 create  index CONSIST_OF_FK on QuestionPart (
 QuestionID ASC
+);
+
+--==============================================================
+-- Table: QuestionPartAns
+--==============================================================
+create table QuestionPartAns (
+QuestionID           INTEGER              not null,
+PartID               VARCHAR(255)         not null,
+PartAnsID            INTEGER              not null,
+ModelAns             VARCHAR(255),
+AnsMark              FLOAT,
+primary key (QuestionID, PartID, PartAnsID),
+foreign key (QuestionID, PartID)
+      references QuestionPart (QuestionID, PartID)
+);
+
+--==============================================================
+-- Index: QUESTIONPARTANS_PK
+--==============================================================
+create unique index QUESTIONPARTANS_PK on QuestionPartAns (
+QuestionID ASC,
+PartID ASC,
+PartAnsID ASC
+);
+
+--==============================================================
+-- Index: RELATIONSHIP_8_FK
+--==============================================================
+create  index RELATIONSHIP_8_FK on QuestionPartAns (
+QuestionID ASC,
+PartID ASC
 );
 
 --==============================================================
@@ -180,10 +213,10 @@ create table TrnQuest (
 StudID               INTEGER              not null,
 QuestionID           INTEGER              not null,
 Response             VARCHAR(255),
-TrnMark              FLOAT,
+TrnMark              VARCHAR(255),
 Reason               VARCHAR(255),
 Other                VARCHAR(255),
-ModeratedBy          VARCHAR(255),
+ModeratedBy          DATE,
 DateModerated        DATE,
 DateMarked           DATE,
 primary key (StudID, QuestionID),
@@ -223,12 +256,11 @@ StudID               INTEGER              not null,
 QuestionID           INTEGER              not null,
 PartID               VARCHAR(255)         not null,
 PartResponse         VARCHAR(255),
-PartTrnMark          FLOAT,
 Other                VARCHAR(255),
-ModeratedBy          VARCHAR(255),
-Reason               VARCHAR(255),
+ModeratedBy          DATE,
 DateModerated        DATE,
 DateMarked           DATE,
+Reason               VARCHAR(255),
 primary key (StudID, QuestionID, PartID),
 foreign key (StudID)
       references Student (StudID),
