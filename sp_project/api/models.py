@@ -7,7 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
 class Class(models.Model):
     classid = models.AutoField(db_column='ClassID', primary_key=True)  # Field name made lowercase.
     name = models.CharField(max_length=256, db_column='Name', blank=True, null=True)  # Field name made lowercase.
