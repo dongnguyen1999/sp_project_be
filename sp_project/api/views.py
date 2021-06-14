@@ -169,7 +169,7 @@ def process_marking_scheme(request):
         ansid_temp = 1
         pass
       if ansid_temp >1:
-        ansid_temp = QuestionAns.objects.aggregate(Max('ansid')) +1
+        ansid_temp = QuestionAns.objects.aggregate(Max('ansid'))['ansid__max'] +1
       modelans = data_filtered.iat[row,3]
       ansmark = data_filtered.iat[row,4]
       questionans = QuestionAns(questionid=questionid,ansid=ansid_temp,modelans=modelans,ansmark=ansmark)
@@ -186,6 +186,7 @@ def process_marking_scheme(request):
         transaction.commit()
 
     data_filtered=data[~data.isin(data_filtered)]
+    data_filtered= data_filtered.dropna(subset=['questionID'])
     for row in range(data_filtered.shape[0]):
       questionid = data_filtered.iat[row, 0]
       partid = data_filtered.iat[row, 1]
