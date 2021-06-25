@@ -103,6 +103,7 @@ class TrnQuestPart(models.Model):
     questionid = models.IntegerField(db_column='QuestionID')  # Field name made lowercase.
     partid = models.CharField(max_length=256, db_column='PartID')  # Field name made lowercase.
     partresponse = models.CharField(max_length=256, db_column='PartResponse', blank=True, null=True)  # Field name made lowercase.
+    trnpartmark = models.CharField(max_length=256, db_column='TrnPartMark', blank=True, null=True)  # Field name made lowercase.
     other = models.CharField(max_length=256, db_column='Other', blank=True, null=True)  # Field name made lowercase.
     moderatedby = models.DateField(db_column='ModeratedBy', blank=True, null=True)  # Field name made lowercase.
     datemoderated = models.DateField(db_column='DateModerated', blank=True, null=True)  # Field name made lowercase.
